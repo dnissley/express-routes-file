@@ -8,7 +8,7 @@ Ever worked with rails, play framework, or some other web framework that used a 
 
 2. Create a file named `routes` in the root directory of your project:
 
-    ```javascript
+    ```
     GET     /                 someFunction      # first: http method, second: url
     POST    /with-param/:id   anotherFunction   # feel free to add comments and blank lines too
     ```
