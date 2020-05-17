@@ -1,6 +1,6 @@
 {
   "name": "express-routes-file",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "express routing via rails / play-framework style 'routes' file",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "name": "Dylan Nissley",
     "email": "dylan.nissley@gmail.com"
   },
-  "license": "ISC",
+  "license": "Unlicense",
   "peerDependencies": {
     "express": "4.x"
   },
