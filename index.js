@@ -4,6 +4,18 @@ const express = require('express')
 
 const validHttpMethods = new Set(['GET', 'POST', 'PUT', 'DELETE'])
 
+const wrapAsync = (fn) => {
+  return (req, res, next) => {
+    const result = fn(req, res, next);
+
+    if (result.then) {
+      return Promise.resolve(result).catch(next);
+    } else {
+      return result;
+    }
+  }
+}
+
 module.exports = (routeHandlers) => {
   const router = express.Router()
   const data = fs.readFileSync('./routes', 'utf8')
@@ -28,7 +40,7 @@ module.exports = (routeHandlers) => {
     }
 
     // 3 - turn the components into an express route
-    router[httpMethod.toLowerCase()](routePath, routeHandlers[routeHandler])
+    router[httpMethod.toLowerCase()](routePath, wrapAsync(routeHandlers[routeHandler]))
   })
 
   return router

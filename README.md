@@ -8,8 +8,8 @@ Ever worked with rails, play framework, or some other web framework that used a 
 
 2. Create a file named `routes` in the root directory of your project:
 
-    ```
-    GET     /                 someFunction      # first: http method, second: url
+    ```plaintext
+    GET     /                 someFunction      # first: http method, second: url, third: name of handler function
     POST    /with-param/:id   anotherFunction   # feel free to add comments and blank lines too
     ```
 
