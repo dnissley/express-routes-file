@@ -2,6 +2,7 @@
   "compilerOptions": {
     "noEmitOnError": true,
     "outDir": "./lib",
+    "declaration": true,
     "target": "es5",
     "noImplicitAny": true,
     "lib": [
