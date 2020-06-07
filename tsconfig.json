@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "outDir": "./lib",
+    "target": "es5",
+    "noImplicitAny": true,
+    "lib": [
+      "ES2020"
+    ]
+  },
+  "include": [
+      "./src/**/*"
+  ]
+}

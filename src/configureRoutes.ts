@@ -1,12 +1,12 @@
-const { EOL } = require('os')
-const fs = require('fs')
-const express = require('express')
+import { EOL } from 'os'
+import { readFileSync } from 'fs'
+import * as express from 'express'
 
 const validHttpMethods = new Set(['GET', 'POST', 'PUT', 'DELETE'])
 
-const wrapAsync = (fn) => {
+const wrapAsync = (requestHandler: express.Handler): express.Handler => {
   return (req, res, next) => {
-    const result = fn(req, res, next)
+    const result = requestHandler(req, res, next)
 
     if (result.then) {
       return Promise.resolve(result).catch(next)
@@ -16,9 +16,9 @@ const wrapAsync = (fn) => {
   }
 }
 
-module.exports = (routeHandlers) => {
+const configureRoutes = (namedRequestHandlers: { [key: string]: express.Handler }): express.Router => {
   const router = express.Router()
-  const data = fs.readFileSync('./routes', 'utf8')
+  const data = readFileSync('./routes', 'utf8')
   const lines = data.split(EOL)
   lines.forEach((line, i) => {
     // 1 - clean up the string: remove comments, trim whitespace
@@ -34,14 +34,31 @@ module.exports = (routeHandlers) => {
     if (components.length !== 3) {
       throw new Error(`line ${i + 1} could not be parsed into a route: "${line}"`)
     }
-    const [httpMethod, routePath, routeHandler] = components
+    const [httpMethodUncased, routePath, routeHandler] = components
+    const httpMethod = httpMethodUncased.toUpperCase()
     if (!validHttpMethods.has(httpMethod)) {
       throw new Error(`line ${i + 1} specifies an invalid http method: ${httpMethod}`)
     }
 
     // 3 - turn the components into an express route
-    router[httpMethod.toLowerCase()](routePath, wrapAsync(routeHandlers[routeHandler]))
+    const asyncSafeHandler = wrapAsync(namedRequestHandlers[routeHandler])
+    switch (httpMethod) {
+      case 'GET':
+        router.get(routePath, asyncSafeHandler)
+        break
+      case 'POST':
+        router.post(routePath, asyncSafeHandler)
+        break
+      case 'PUT':
+        router.put(routePath, asyncSafeHandler)
+        break
+      case 'DELETE':
+        router.delete(routePath, asyncSafeHandler)
+        break
+    }
   })
 
   return router
 }
+
+export default configureRoutes
