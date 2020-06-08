@@ -1,6 +1,6 @@
 import { EOL } from 'os'
 import { readFileSync } from 'fs'
-import * as express from 'express'
+import express from 'express'
 
 const validHttpMethods = new Set(['GET', 'POST', 'PUT', 'DELETE'])
 
@@ -61,4 +61,4 @@ const configureRoutes = (namedRequestHandlers: { [key: string]: express.Handler 
   return router
 }
 
-export default configureRoutes
+export = configureRoutes
