@@ -4,7 +4,7 @@
     "outDir": "./lib",
     "declaration": true,
     "target": "es5",
-    "noImplicitAny": true,
+    "strict": true,
     "lib": [
       "ES2020"
     ]
