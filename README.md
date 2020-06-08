@@ -31,3 +31,10 @@ Ever worked with rails, play framework, or some other web framework that used a 
 
     app.listen(3000, () => console.log('listening on port 3000'))
     ```
+
+## Working Examples
+
+[Using Plain Node.js](https://github.com/dnissley/js/tree/master/express-routes-file-example)
+
+[Using Typescript](https://github.com/dnissley/ts/tree/master/express-routes-file-example)
+
