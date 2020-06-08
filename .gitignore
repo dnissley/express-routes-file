@@ -117,3 +117,6 @@ dist
 
 # Local vscode settings
 .vscode
+
+# Built typescript files
+/lib

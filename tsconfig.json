@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noEmitOnError": true,
+    "outDir": "./lib",
+    "declaration": true,
+    "target": "es5",
+    "lib": [
+      "ES2020"
+    ]
+  },
+  "include": [
+      "./src/**/*"
+  ]
+}
