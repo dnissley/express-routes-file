@@ -14,8 +14,9 @@
     "./lib/"
   ],
   "scripts": {
+    "build": "tsc",
     "lint": "standardx **/*.ts",
-    "prepublishOnly": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "npm run lint && jest"
   },
   "peerDependencies": {
