@@ -50,5 +50,8 @@
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "error"
     }
+  },
+  "dependencies": {
+    "array-flat-polyfill": "^1.0.1"
   }
 }

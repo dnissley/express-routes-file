@@ -1,5 +1,6 @@
 import { EOL } from 'os'
 import { readFileSync } from 'fs'
+import 'array-flat-polyfill'
 import express from 'express'
 
 const validHttpMethods = new Set(['GET', 'POST', 'PUT', 'DELETE'])
