@@ -1,4 +1,4 @@
-# express-routes-file ![continuous integration status](https://github.com/dnissley/express-routes-file/workflows/Build%20&%20Test/badge.svg)
+# express-routes-file ![continuous integration status](https://github.com/dnissley/express-routes-file/workflows/Build%20&%20Test/badge.svg) [![npm version](https://badge.fury.io/js/express-routes-file.svg)](https://badge.fury.io/js/express-routes-file)
 
 Ever worked with rails, play framework, or some other web framework that used a 'routes' file to do the simple work of hooking up urls to code? Dislike the overly flexible nature of express routing and wish you had something like a routes file instead? This library is for you.
 
