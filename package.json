@@ -17,7 +17,7 @@
     "build": "tsc",
     "lint": "standardx **/*.ts",
     "prepublishOnly": "npm run build",
-    "test": "npm run lint && jest"
+    "test": "npm run lint && jest --coverage"
   },
   "peerDependencies": {
     "express": "4.x"
