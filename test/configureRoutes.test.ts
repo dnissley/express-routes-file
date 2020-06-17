@@ -98,14 +98,62 @@ describe('configureRoutes()', () => {
 
   it('should throw an error for routes with an invalid http method', () => {
     writeRoutesFile(`
-      WRONG    /test    testHandler
+      WRONG  /test    testHandler
     `)
 
     const testHandler = jest.fn(testResponseHandler)
     expect(() => configureRoutes({ testHandler })).toThrow()
   })
 
-  it.todo('should not mess with the flow of exceptions getting passed to next')
+  it('should not mess with the flow of exceptions getting passed to next', async () => {
+    writeRoutesFile(`
+      GET    /test    testHandler
+    `)
 
-  it.todo('should wrap promise rejections and pass them to next')
+    const testError = new Error()
+    const testHandler = jest.fn(() => { throw testError })
+    // express expects error handlers to have 4 parameters
+    // eslint-disable-next-line
+    const testErrorHandler = jest.fn((err, req, res, next) => {
+      res.status(500).send(testResponseBody)
+    })
+    const app = express()
+    const routes = configureRoutes({ testHandler })
+    app.use('/', routes)
+    app.use(testErrorHandler)
+
+    const response = await request(app).get('/test')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe(testResponseBody)
+    expect(testHandler).toHaveBeenCalledTimes(1)
+    expect(testErrorHandler).toHaveBeenCalledTimes(1)
+    expect(testErrorHandler.mock.calls[0][0]).toBe(testError)
+  })
+
+  it('should wrap promise rejections and pass the resulting error to next', async () => {
+    writeRoutesFile(`
+      GET    /test    testHandler
+    `)
+
+    const testError = new Error()
+    const testHandler = jest.fn(() => (Promise.reject(testError)))
+    // express expects error handlers to have 4 parameters
+    // eslint-disable-next-line
+    const testErrorHandler = jest.fn((err, req, res, next) => {
+      res.status(500).send(testResponseBody)
+    })
+    const app = express()
+    const routes = configureRoutes({ testHandler })
+    app.use('/', routes)
+    app.use(testErrorHandler)
+
+    const response = await request(app).get('/test')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe(testResponseBody)
+    expect(testHandler).toHaveBeenCalledTimes(1)
+    expect(testErrorHandler).toHaveBeenCalledTimes(1)
+    expect(testErrorHandler.mock.calls[0][0]).toBe(testError)
+  })
 })
