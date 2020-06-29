@@ -1,6 +1,6 @@
 {
   "name": "express-routes-file",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "express routing via rails / play-framework style 'routes' file",
   "author": {
     "name": "Dylan Nissley",
