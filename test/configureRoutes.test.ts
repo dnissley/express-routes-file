@@ -105,6 +105,27 @@ describe('configureRoutes()', () => {
     expect(() => configureRoutes({ testHandler })).toThrow()
   })
 
+  it('should handle result handlers that do not return anything (that return undefined)', async () => {
+    writeRoutesFile(`
+      GET    /test    testHandler
+    `)
+
+    const testHandler: Handler = (req, res) => {
+      res.status(200).send(testResponseBody)
+      // NOTE: notice how we're not wrapping this in jest.fn,
+      //   which seems to be returning somethng other than undefined
+      //   for some reason.
+    }
+    const app = express()
+    const routes = configureRoutes({ testHandler })
+    app.use('/', routes)
+
+    const response = await request(app).get('/test')
+
+    expect(response.status).toBe(200)
+    expect(response.text).toBe(testResponseBody)
+  })
+
   it('should not mess with the flow of exceptions getting passed to next', async () => {
     writeRoutesFile(`
       GET    /test    testHandler
