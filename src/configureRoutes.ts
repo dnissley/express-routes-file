@@ -7,7 +7,7 @@ const validHttpMethods = new Set(['GET', 'POST', 'PUT', 'DELETE'])
 
 const wrapAsync = (requestHandler: express.Handler): express.Handler => {
   return (req, res, next) => {
-    const result = requestHandler(req, res, next) as Promise<any> | unknown
+    const result = requestHandler(req, res, next) as PromiseLike<any> | unknown
 
     if (result instanceof Promise) {
       return Promise.resolve(result).catch(next)
